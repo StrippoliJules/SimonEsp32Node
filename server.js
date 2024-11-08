@@ -70,11 +70,9 @@ client.on('message', (topic, message) => {
     console.log(`Message reçu : ${JSON.stringify(messageContent)} depuis le topic : ${topic}`);
 
     if (topic === scoreTopic) {
-      // Vérifie si le message contient 'username' et 'score'
       if (typeof messageContent.username === 'string' && typeof messageContent.score === 'number') {
         const { username, score } = messageContent;
         console.log(`Score reçu : ${score} pour l'utilisateur ${username}`);
-        // Vous pouvez traiter le score ici si nécessaire
       } else {
         console.warn('Le message reçu ne contient pas un username ou un score valide.');
       }
@@ -94,7 +92,6 @@ app.post('/start', (req, res) => {
   if (username) {
     console.log(`Session démarrée avec le pseudonyme : ${username}`);
 
-    // Publier un message MQTT sur le topic 'simon/start' avec 'action' et 'username'
     const startMessage = JSON.stringify({ action: 'start', username });
     client.publish(startTopic, startMessage, { qos: 0, retain: false }, (err) => {
       if (err) {
